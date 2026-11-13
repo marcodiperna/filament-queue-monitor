@@ -7,6 +7,7 @@ namespace MarcoDiPerna\FilamentQueueMonitor\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
  * Un job fallito, dalla tabella dei falliti configurata in queue.failed.
@@ -37,6 +38,11 @@ class FailedJob extends Model
     protected function name(): Attribute
     {
         return Attribute::get(fn (): string => QueuedJob::displayName($this->payload));
+    }
+
+    protected function operatorId(): Attribute
+    {
+        return Attribute::get(fn (): ?int => Operator::fromPayload($this->payload));
     }
 
     /**

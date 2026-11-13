@@ -11,6 +11,8 @@ use Filament\Tables\Table;
 use MarcoDiPerna\FilamentQueueMonitor\Models\JobBatch;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\Pages\ListJobBatches;
+use MarcoDiPerna\FilamentQueueMonitor\Support\Columns;
+use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
  * I lavori lanciati a gruppi: quanto manca e quanti sono falliti.
@@ -57,6 +59,8 @@ class JobBatchResource extends Resource
                     ->color(fn (int $state): ?string => $state > 0 ? 'danger' : null),
                 TextColumn::make('started_at')->label(static::label('columns.started_at'))->dateTime('d/m/Y H:i:s'),
                 TextColumn::make('ended_at')->label(static::label('columns.ended_at'))->dateTime('d/m/Y H:i:s')->placeholder('—'),
+                Columns::operator()
+                    ->visible(fn (): bool => Operator::enabled() && config('queue-monitor.history.enabled')),
             ])
             ->emptyStateHeading(static::label('batches.empty'))
             ->emptyStateIcon(Heroicon::OutlinedRectangleStack);

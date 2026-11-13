@@ -10,11 +10,30 @@ use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Artisan;
 use MarcoDiPerna\FilamentQueueMonitor\Models\FailedJob;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
 
 class ListFailedJobs extends ListRecords
 {
     protected static string $resource = FailedJobResource::class;
+
+    /**
+     * La resource configurata nel plugin: se l'app ne ha registrata una sua
+     * sottoclasse, tabella e azioni sono le sue.
+     */
+    public static function getResource(): string
+    {
+        return QueueMonitorPlugin::get()->getResource('failed');
+    }
+
+    /**
+     * Il titolo e' quello della voce di menu: chi clicca "Storico" deve
+     * trovare "Storico", non il nome del modello.
+     */
+    public function getTitle(): string
+    {
+        return static::getResource()::getNavigationLabel();
+    }
 
     protected function getHeaderActions(): array
     {

@@ -7,6 +7,7 @@ namespace MarcoDiPerna\FilamentQueueMonitor\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
  * Un job in coda, dalla tabella del driver database. La scrive e la svuota il
@@ -59,13 +60,19 @@ class QueuedJob extends Model
     }
 
     /**
-     * Il nome leggibile che Laravel salva nel payload, senza namespace.
+     * Il nome che Laravel salva nel payload, di solito la classe completa. Come
+     * mostrarlo lo decide il plugin (formatJobName).
      */
     public static function displayName(?string $payload): string
     {
         $data = json_decode((string) $payload, true);
 
-        return class_basename((string) ($data['displayName'] ?? '?'));
+        return (string) ($data['displayName'] ?? '?');
+    }
+
+    protected function operatorId(): Attribute
+    {
+        return Attribute::get(fn (): ?int => Operator::fromPayload($this->payload));
     }
 
     /**

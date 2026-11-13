@@ -48,6 +48,11 @@ trait BelongsToQueueMonitor
         return __('filament-queue-monitor::queue-monitor.'.static::monitorKey().'.navigation');
     }
 
+    public static function getBreadcrumb(): string
+    {
+        return static::getNavigationLabel();
+    }
+
     public static function getModelLabel(): string
     {
         return __('filament-queue-monitor::queue-monitor.'.static::monitorKey().'.model');

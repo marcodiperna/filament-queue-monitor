@@ -7,7 +7,7 @@ return [
         'plural' => 'Job in coda',
         'empty' => 'Coda vuota',
         'empty_description' => 'Il worker ha smaltito tutto.',
-        'delete_description' => 'Il job esce dalla coda e non verra\' eseguito.',
+        'delete_description' => 'Il job esce dalla coda e non verrà eseguito.',
     ],
     'failed' => [
         'navigation' => 'Job falliti',
@@ -29,7 +29,15 @@ return [
         'plural' => 'Batch',
         'empty' => 'Nessun batch',
     ],
+    'history' => [
+        'navigation' => 'Storico',
+        'model' => 'Esecuzione',
+        'plural' => 'Esecuzioni',
+        'empty' => 'Nessuna esecuzione registrata',
+    ],
     'columns' => [
+        'operator' => 'Avviato da',
+        'duration' => 'Durata',
         'job' => 'Job',
         'queue' => 'Coda',
         'state' => 'Stato',
@@ -47,11 +55,33 @@ return [
         'ended_at' => 'Concluso',
     ],
     'states' => [
+        'succeeded' => 'Riuscito',
+        'failed' => 'Fallito',
+        'retried' => 'Ritentato',
         'running' => 'In esecuzione',
         'scheduled' => 'Programmato',
         'waiting' => 'In attesa',
         'done' => 'Concluso',
         'done_with_failures' => 'Concluso con errori',
         'cancelled' => 'Annullato',
+    ],
+    'system' => 'Sistema',
+    'stats' => [
+        'runs' => 'Esecuzioni',
+        'failed' => 'Falliti',
+        'failure_rate' => ':rate% delle esecuzioni nelle ultime 24 ore',
+        'average_duration' => 'Durata media',
+        'total_time' => 'Tempo di lavoro',
+        'last_24h' => 'Ultime 24 ore',
+        'oldest_waiting' => 'Il più vecchio aspetta da :time',
+    ],
+    'filters' => [
+        'today' => 'Solo oggi',
+    ],
+    'error' => [
+        'show' => 'Errore',
+        'copy' => 'Copia',
+        'copied' => 'Errore copiato',
+        'close' => 'Chiudi',
     ],
 ];

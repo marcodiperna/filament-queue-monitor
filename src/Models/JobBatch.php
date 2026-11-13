@@ -66,4 +66,16 @@ class JobBatch extends Model
     {
         return Attribute::get(fn (): ?Carbon => $this->finished_at ? QueuedJob::time($this->finished_at) : null);
     }
+
+    /**
+     * Chi ha avviato il batch: l'operatore della sua prima esecuzione. Si
+     * ricava dallo storico, cosi' la tabella job_batches di Laravel resta
+     * com'e'.
+     */
+    protected function operatorId(): Attribute
+    {
+        return Attribute::get(fn (): ?int => config('queue-monitor.history.enabled')
+            ? JobRun::query()->where('batch_id', $this->getKey())->whereNotNull('operator_id')->orderBy('id')->value('operator_id')
+            : null);
+    }
 }

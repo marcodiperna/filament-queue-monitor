@@ -22,8 +22,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use MarcoDiPerna\FilamentQueueMonitor\Models\FailedJob;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\Pages\ListFailedJobs;
+use MarcoDiPerna\FilamentQueueMonitor\Support\Columns;
+use MarcoDiPerna\FilamentQueueMonitor\Support\ErrorModal;
 
 /**
  * I job falliti: l'errore per capire cosa e' andato storto e la possibilita'
@@ -80,14 +83,14 @@ class FailedJobResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema->columns(2)->components([
-            TextEntry::make('name')->label(static::label('columns.job')),
+            TextEntry::make('name')
+                ->label(static::label('columns.job'))
+                ->formatStateUsing(fn (?string $state): string => QueueMonitorPlugin::get()->formatJobName($state))
+                ->helperText(fn (?string $state): ?string => $state),
             TextEntry::make('queue')->label(static::label('columns.queue')),
             TextEntry::make('failed_at')->label(static::label('columns.failed_at'))->dateTime('d/m/Y H:i:s'),
             TextEntry::make('uuid')->label(static::label('columns.uuid'))->copyable(),
-            TextEntry::make('exception')
-                ->label(static::label('columns.error'))
-                ->columnSpanFull()
-                ->extraAttributes(['style' => 'font-family: ui-monospace, monospace; font-size: 0.75rem; white-space: pre-wrap; max-height: 24rem; overflow-y: auto']),
+            ErrorModal::entry(label: static::label('columns.error')),
         ]);
     }
 
@@ -96,12 +99,13 @@ class FailedJobResource extends Resource
         return $table
             ->defaultSort('failed_at', 'desc')
             ->columns([
-                TextColumn::make('name')->label(static::label('columns.job'))->weight('bold'),
-                TextColumn::make('queue')->label(static::label('columns.queue'))->badge()->color('gray'),
-                TextColumn::make('error')->label(static::label('columns.error'))->wrap()->color('danger'),
+                Columns::jobName(),
+                Columns::queue(),
+                Columns::error(),
                 TextColumn::make('failed_at')->label(static::label('columns.failed_at'))->dateTime('d/m/Y H:i:s')->sortable(),
+                Columns::operator(),
             ])
-            ->recordActions([
+            ->recordActions(QueueMonitorPlugin::get()->recordActions([
                 ViewAction::make()->modalWidth(Width::FiveExtraLarge),
                 Action::make('retry')
                     ->label(static::label('failed.retry'))
@@ -112,7 +116,7 @@ class FailedJobResource extends Resource
                         Notification::make()->success()->title(trans_choice('filament-queue-monitor::queue-monitor.failed.retried', 1))->send();
                     }),
                 DeleteAction::make(),
-            ])
+            ]))
             ->toolbarActions([
                 BulkActionGroup::make([
                     BulkAction::make('retrySelected')

@@ -10,8 +10,11 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use MarcoDiPerna\FilamentQueueMonitor\Models\QueuedJob;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\Pages\ListQueuedJobs;
+use MarcoDiPerna\FilamentQueueMonitor\Support\Columns;
+use MarcoDiPerna\FilamentQueueMonitor\Widgets\QueueOverview;
 
 /**
  * La coda: cosa aspetta il worker, cosa sta eseguendo e cosa partira' piu'
@@ -35,6 +38,11 @@ class QueuedJobResource extends Resource
         return 0;
     }
 
+    public static function getWidgets(): array
+    {
+        return [QueueOverview::class];
+    }
+
     public static function getNavigationBadge(): ?string
     {
         $count = QueuedJob::query()->count();
@@ -48,8 +56,8 @@ class QueuedJobResource extends Resource
             ->defaultSort('id')
             ->poll('10s')
             ->columns([
-                TextColumn::make('name')->label(static::label('columns.job'))->weight('bold'),
-                TextColumn::make('queue')->label(static::label('columns.queue'))->badge()->color('gray'),
+                Columns::jobName(),
+                Columns::queue(),
                 TextColumn::make('state')
                     ->label(static::label('columns.state'))
                     ->badge()
@@ -62,11 +70,12 @@ class QueuedJobResource extends Resource
                 TextColumn::make('attempts')->label(static::label('columns.attempts'))->numeric(),
                 TextColumn::make('queued_at')->label(static::label('columns.queued_at'))->dateTime('d/m/Y H:i:s'),
                 TextColumn::make('available_from')->label(static::label('columns.available_from'))->dateTime('d/m/Y H:i:s'),
+                Columns::operator(),
             ])
-            ->recordActions([
+            ->recordActions(QueueMonitorPlugin::get()->recordActions([
                 DeleteAction::make()
                     ->modalDescription(static::label('queued.delete_description')),
-            ])
+            ]))
             ->emptyStateHeading(static::label('queued.empty'))
             ->emptyStateDescription(static::label('queued.empty_description'))
             ->emptyStateIcon(Heroicon::OutlinedQueueList);
