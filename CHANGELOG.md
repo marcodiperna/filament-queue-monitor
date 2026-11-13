@@ -2,7 +2,7 @@
 
 ## v1.0.0 — 2026-11-13
 
-Prima versione, estratta da P2TGest dove ha sostituito `moox/jobs` (che non
+Prima versione, nata in un gestionale dove ha sostituito `moox/jobs` (che non
 supportava Laravel 13).
 
 - Tre pagine: **Code** (job in attesa, in esecuzione, programmati), **Job

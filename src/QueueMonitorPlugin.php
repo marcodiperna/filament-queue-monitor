@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor;
+namespace MarcoDiPerna\FilamentQueueMonitor;
 
 use BackedEnum;
 use Closure;
@@ -11,9 +11,9 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
-use P2TInformatica\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
-use P2TInformatica\FilamentQueueMonitor\Resources\JobBatches\JobBatchResource;
-use P2TInformatica\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\JobBatchResource;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
 
 /**
  * Code, job falliti e batch nel pannello, letti dalle tabelle standard del

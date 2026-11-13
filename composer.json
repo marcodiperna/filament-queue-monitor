@@ -1,13 +1,21 @@
 {
-    "name": "p2tinformatica/filament-queue-monitor",
+    "name": "marcodiperna/filament-queue-monitor",
     "description": "Code, job falliti e batch di Laravel nel pannello Filament, sulle tabelle standard del driver database: nessuna tabella in piu', nessun listener.",
-    "keywords": ["laravel", "filament", "queue", "jobs", "failed-jobs", "monitor"],
+    "keywords": [
+        "laravel",
+        "filament",
+        "queue",
+        "jobs",
+        "failed-jobs",
+        "monitor"
+    ],
+    "homepage": "https://github.com/marcodiperna/filament-queue-monitor",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "P2T Informatica",
-            "homepage": "https://p2tinformatica.it",
+            "name": "Marco Di Perna",
+            "homepage": "https://github.com/marcodiperna",
             "role": "Developer"
         }
     ],
@@ -23,18 +31,18 @@
     },
     "autoload": {
         "psr-4": {
-            "P2TInformatica\\FilamentQueueMonitor\\": "src/"
+            "MarcoDiPerna\\FilamentQueueMonitor\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "P2TInformatica\\FilamentQueueMonitor\\Tests\\": "tests/"
+            "MarcoDiPerna\\FilamentQueueMonitor\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "P2TInformatica\\FilamentQueueMonitor\\QueueMonitorServiceProvider"
+                "MarcoDiPerna\\FilamentQueueMonitor\\QueueMonitorServiceProvider"
             ]
         }
     },

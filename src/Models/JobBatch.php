@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Models;
+namespace MarcoDiPerna\FilamentQueueMonitor\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;

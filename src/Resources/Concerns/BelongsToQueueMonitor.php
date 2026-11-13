@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Resources\Concerns;
+namespace MarcoDiPerna\FilamentQueueMonitor\Resources\Concerns;
 
 use BackedEnum;
 use Illuminate\Contracts\Support\Htmlable;
-use P2TInformatica\FilamentQueueMonitor\QueueMonitorPlugin;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 /**
  * Quello che le tre risorse prendono dal plugin: accesso, gruppo, ordine e

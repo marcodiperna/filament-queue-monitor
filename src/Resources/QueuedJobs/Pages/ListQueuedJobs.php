@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Resources\QueuedJobs\Pages;
+namespace MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\Pages;
 
 use Filament\Resources\Pages\ListRecords;
-use P2TInformatica\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
 
 class ListQueuedJobs extends ListRecords
 {

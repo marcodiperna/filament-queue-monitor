@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Tests;
+namespace MarcoDiPerna\FilamentQueueMonitor\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -19,10 +19,10 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Livewire\LivewireServiceProvider;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorServiceProvider;
+use MarcoDiPerna\FilamentQueueMonitor\Tests\Fixtures\AdminPanelProvider;
+use MarcoDiPerna\FilamentQueueMonitor\Tests\Fixtures\User;
 use Orchestra\Testbench\TestCase as Orchestra;
-use P2TInformatica\FilamentQueueMonitor\QueueMonitorServiceProvider;
-use P2TInformatica\FilamentQueueMonitor\Tests\Fixtures\AdminPanelProvider;
-use P2TInformatica\FilamentQueueMonitor\Tests\Fixtures\User;
 
 abstract class TestCase extends Orchestra
 {

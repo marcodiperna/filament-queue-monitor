@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Resources\FailedJobs\Pages;
+namespace MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\Pages;
 
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Artisan;
-use P2TInformatica\FilamentQueueMonitor\Models\FailedJob;
-use P2TInformatica\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
+use MarcoDiPerna\FilamentQueueMonitor\Models\FailedJob;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
 
 class ListFailedJobs extends ListRecords
 {

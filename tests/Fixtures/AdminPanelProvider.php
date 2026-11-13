@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Tests\Fixtures;
+namespace MarcoDiPerna\FilamentQueueMonitor\Tests\Fixtures;
 
 use Filament\Panel;
 use Filament\PanelProvider;
-use P2TInformatica\FilamentQueueMonitor\QueueMonitorPlugin;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 /**
  * Un pannello come quello di un'applicazione vera: il plugin limitato a chi

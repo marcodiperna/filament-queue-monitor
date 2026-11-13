@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor;
+namespace MarcoDiPerna\FilamentQueueMonitor;
 
 use Illuminate\Support\ServiceProvider;
 

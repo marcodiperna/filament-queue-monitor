@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Tests;
+namespace MarcoDiPerna\FilamentQueueMonitor\Tests;
 
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
-use P2TInformatica\FilamentQueueMonitor\Models\FailedJob;
-use P2TInformatica\FilamentQueueMonitor\Models\JobBatch;
-use P2TInformatica\FilamentQueueMonitor\Models\QueuedJob;
-use P2TInformatica\FilamentQueueMonitor\QueueMonitorPlugin;
-use P2TInformatica\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
-use P2TInformatica\FilamentQueueMonitor\Resources\FailedJobs\Pages\ListFailedJobs;
-use P2TInformatica\FilamentQueueMonitor\Resources\JobBatches\JobBatchResource;
-use P2TInformatica\FilamentQueueMonitor\Resources\JobBatches\Pages\ListJobBatches;
-use P2TInformatica\FilamentQueueMonitor\Resources\QueuedJobs\Pages\ListQueuedJobs;
-use P2TInformatica\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
+use MarcoDiPerna\FilamentQueueMonitor\Models\FailedJob;
+use MarcoDiPerna\FilamentQueueMonitor\Models\JobBatch;
+use MarcoDiPerna\FilamentQueueMonitor\Models\QueuedJob;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\Pages\ListFailedJobs;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\JobBatchResource;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\Pages\ListJobBatches;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\Pages\ListQueuedJobs;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
 use PHPUnit\Framework\Attributes\Test;
 
 class QueueMonitorTest extends TestCase

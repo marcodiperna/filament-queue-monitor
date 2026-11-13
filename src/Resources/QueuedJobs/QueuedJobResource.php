@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Resources\QueuedJobs;
+namespace MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs;
 
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use P2TInformatica\FilamentQueueMonitor\Models\QueuedJob;
-use P2TInformatica\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
-use P2TInformatica\FilamentQueueMonitor\Resources\QueuedJobs\Pages\ListQueuedJobs;
+use MarcoDiPerna\FilamentQueueMonitor\Models\QueuedJob;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\Pages\ListQueuedJobs;
 
 /**
  * La coda: cosa aspetta il worker, cosa sta eseguendo e cosa partira' piu'

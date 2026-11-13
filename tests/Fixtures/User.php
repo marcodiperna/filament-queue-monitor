@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Tests\Fixtures;
+namespace MarcoDiPerna\FilamentQueueMonitor\Tests\Fixtures;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 

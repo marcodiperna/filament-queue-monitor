@@ -1,4 +1,4 @@
-# p2tinformatica/filament-queue-monitor
+# marcodiperna/filament-queue-monitor
 
 Code, job falliti e batch di Laravel nel pannello [Filament](https://filamentphp.com).
 
@@ -24,13 +24,13 @@ Le voci di menu di Code e Job falliti mostrano un contatore quando non sono vuot
 ## Installazione
 
 ```bash
-composer require p2tinformatica/filament-queue-monitor
+composer require marcodiperna/filament-queue-monitor
 ```
 
 Nel pannello:
 
 ```php
-use P2TInformatica\FilamentQueueMonitor\QueueMonitorPlugin;
+use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 ->plugins([
     QueueMonitorPlugin::make()

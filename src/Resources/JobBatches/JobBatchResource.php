@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Resources\JobBatches;
+namespace MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches;
 
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use P2TInformatica\FilamentQueueMonitor\Models\JobBatch;
-use P2TInformatica\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
-use P2TInformatica\FilamentQueueMonitor\Resources\JobBatches\Pages\ListJobBatches;
+use MarcoDiPerna\FilamentQueueMonitor\Models\JobBatch;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\Pages\ListJobBatches;
 
 /**
  * I lavori lanciati a gruppi: quanto manca e quanti sono falliti.

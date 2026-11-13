@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace P2TInformatica\FilamentQueueMonitor\Resources\FailedJobs;
+namespace MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs;
 
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
@@ -21,9 +21,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
-use P2TInformatica\FilamentQueueMonitor\Models\FailedJob;
-use P2TInformatica\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
-use P2TInformatica\FilamentQueueMonitor\Resources\FailedJobs\Pages\ListFailedJobs;
+use MarcoDiPerna\FilamentQueueMonitor\Models\FailedJob;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\Concerns\BelongsToQueueMonitor;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\Pages\ListFailedJobs;
 
 /**
  * I job falliti: l'errore per capire cosa e' andato storto e la possibilita'
