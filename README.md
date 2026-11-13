@@ -1,100 +1,102 @@
 # marcodiperna/filament-queue-monitor
 
-Code, job falliti e batch di Laravel nel pannello [Filament](https://filamentphp.com).
+**English** · [Italiano](README.it.md)
 
-Legge le **tabelle standard** del driver database di Laravel — `jobs`, `failed_jobs`,
-`job_batches` — senza tabelle aggiuntive, senza listener e senza migrazioni: quello che
-vedi è quello che vede il worker.
+Laravel queues, failed jobs and batches in your [Filament](https://filamentphp.com) panel.
 
-| Pagina | Cosa mostra | Azioni |
+It reads Laravel's **standard tables** for the database driver — `jobs`, `failed_jobs`,
+`job_batches` — with no extra tables, listeners or migrations: what you see is what the
+worker sees.
+
+| Page | Shows | Actions |
 |---|---|---|
-| **Code** | job in attesa, in esecuzione e programmati, con tentativi e orari | elimina un job bloccato |
-| **Job falliti** | job, coda, prima riga dell'errore; l'eccezione completa nel dettaglio | riprova (singolo, selezionati, tutti), elimina, svuota |
-| **Batch** | avanzamento, job totali e falliti, stato | — |
-| **Storico** *(opzionale)* | ogni esecuzione: esito, durata, tentativo, errore | filtri per stato, job e giorno |
+| **Queue** | waiting, running and scheduled jobs, with attempts and times | delete a stuck job |
+| **Failed jobs** | job, queue, first line of the error; the full exception on click | retry (one, selected, all), delete, flush |
+| **Batches** | progress, total and failed jobs, state | — |
+| **History** *(optional)* | every run: outcome, duration, attempt, error | filters by state, job and day |
 
-Le voci di menu di Code e Job falliti mostrano un contatore quando non sono vuote. Code e
-Storico hanno in testa le statistiche: quanti job aspettano e da quanto il più vecchio; per
-lo storico esecuzioni, falliti, durata media e tempo di lavoro delle ultime 24 ore, con
-l'andamento degli ultimi giorni (7, configurabili).
+The Queue and Failed jobs menu items show a counter when not empty. Queue and History have
+stats on top: how many jobs are waiting and for how long the oldest has been; for the
+history, runs, failures, average duration and working time over the last 24 hours, with the
+trend of the last days (7, configurable).
 
-## Requisiti
+## Requirements
 
 - PHP 8.2+
-- Laravel 12 o 13
+- Laravel 12 or 13
 - Filament 5
-- coda con driver `database` (`QUEUE_CONNECTION=database`)
+- the `database` queue driver (`QUEUE_CONNECTION=database`)
 
-## Installazione
+## Installation
 
 ```bash
 composer require marcodiperna/filament-queue-monitor
 ```
 
-Nel pannello:
+In your panel:
 
 ```php
 use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 ->plugins([
     QueueMonitorPlugin::make()
-        ->navigationGroup('Sistema')
-        ->authorize(fn ($user) => $user?->can('gestire sistema')),
+        ->navigationGroup('System')
+        ->authorize(fn ($user) => $user?->can('manage system')),
 ])
 ```
 
-> Senza `authorize()` le pagine sono aperte a **chiunque entri nel pannello**. In
-> produzione conviene sempre limitarle.
+> Without `authorize()` the pages are open to **anyone who can enter the panel**. In
+> production, always restrict them.
 
-## Opzioni
+## Options
 
-| Metodo | Default | |
+| Method | Default | |
 |---|---|---|
-| `navigationGroup(string\|Closure\|null)` | nessuno | gruppo di menu |
-| `navigationSort(int)` | `90` | posizione della prima voce; le altre seguono (+1, +2) |
-| `navigationIcons(queued:, failed:, batches:, history:)` | Heroicons | icone delle voci, anche solo alcune |
-| `authorize(Closure)` | tutti | riceve l'utente collegato, restituisce `bool` |
-| `formatJobNameUsing(Closure)` | classe senza namespace | riceve il nome completo del job (`$name`) |
-| `formatOperatorUsing(Closure)` | attributo `name` | riceve il modello utente (`$user`) |
-| `hideQueueColumn()` | visibile | per chi usa una coda sola |
-| `groupRecordActions(bool)` | `true` | azioni di riga nel menu a tre puntini di Filament; `false` le mostra affiancate |
-| `modifyErrorModalUsing(Closure)` | — | ritocca la modale dell'errore; riceve e restituisce l'`Action` |
-| `resource(string $page, string $class)` | — | sostituisce una pagina (`queued`, `failed`, `batches`, `history`) con una sottoclasse dell'app |
+| `navigationGroup(string\|Closure\|null)` | none | menu group |
+| `navigationSort(int)` | `90` | position of the first item; the others follow (+1, +2, +3) |
+| `navigationIcons(queued:, failed:, batches:, history:)` | Heroicons | menu icons, all or some |
+| `authorize(Closure)` | everyone | receives the logged-in user, returns `bool` |
+| `formatJobNameUsing(Closure)` | class without namespace | receives the full job name (`$name`) |
+| `formatOperatorUsing(Closure)` | `name` attribute | receives the user model (`$user`) |
+| `hideQueueColumn()` | visible | for apps with a single queue |
+| `groupRecordActions(bool)` | `true` | row actions in Filament's three-dots menu; `false` shows them inline |
+| `modifyErrorModalUsing(Closure)` | — | reshapes the error modal; receives and returns the `Action` |
+| `resource(string $page, string $class)` | — | replaces a page (`queued`, `failed`, `batches`, `history`) with your own subclass |
 
-## Storico e operatore
+## History and operator
 
-Due funzioni opzionali, che si attivano dalla configurazione e non dal plugin, perché
-devono girare anche nel worker, dove i pannelli Filament non si caricano:
+Two optional features, switched on from the configuration rather than the plugin, because
+they must run in the worker too, where Filament panels are not loaded:
 
 ```dotenv
-QUEUE_MONITOR_HISTORY=true          # una riga per ogni esecuzione, pagina Storico
-QUEUE_MONITOR_KEEP_DAYS=7           # pulizia giornaliera delle righe più vecchie
-QUEUE_MONITOR_STATS_DAYS=7          # giorni dell'andamento nelle statistiche
-QUEUE_MONITOR_TRACK_OPERATOR=true   # chi ha avviato il job
+QUEUE_MONITOR_HISTORY=true          # one row per run, History page
+QUEUE_MONITOR_KEEP_DAYS=7           # daily cleanup of older rows
+QUEUE_MONITOR_STATS_DAYS=7          # days in the stats trend
+QUEUE_MONITOR_TRACK_OPERATOR=true   # who started the job
 ```
 
-**Storico.** Laravel cancella un job appena finisce: senza storico non si sa se il backup di
-stanotte è girato. Attivandolo, il pacchetto crea la tabella `queue_monitor_runs` con il
-normale `php artisan migrate` e la ripulisce ogni giorno (`model:prune` nello scheduler),
-senza mai scendere sotto i giorni delle statistiche.
+**History.** Laravel deletes a job as soon as it finishes: without a history there is no way
+to know whether last night's backup ran. When enabled, the package creates the
+`queue_monitor_runs` table through your usual `php artisan migrate` and prunes it daily
+(`model:prune` in the scheduler), never below the stats period.
 
-**Operatore.** L'id dell'utente collegato entra nel payload al momento del dispatch, quando la
-sessione c'è ancora. I job accodati da un job in esecuzione ereditano l'operatore del padre,
-così un'intera catena resta attribuita a chi ha premuto il bottone. Compare in Code, Job
-falliti e Storico; nei batch, se lo storico è attivo. I job partiti senza utente (scheduler,
-comandi) si leggono come *Sistema*.
+**Operator.** The logged-in user's id goes into the payload at dispatch time, while the
+session still exists. Jobs queued by a running job inherit their parent's operator, so a
+whole chain stays attributed to whoever pressed the button. It shows on Queue, Failed jobs
+and History; on Batches when the history is enabled. Jobs started without a user (scheduler,
+commands) read as *System*.
 
-Per personalizzare il resto (nome della chiave nel payload, modello utente, tabella):
+To customise the rest (payload key, user model, table name):
 
 ```bash
 php artisan vendor:publish --tag=filament-queue-monitor-config
-php artisan vendor:publish --tag=filament-queue-monitor-migrations   # solo per modificare la tabella
+php artisan vendor:publish --tag=filament-queue-monitor-migrations   # only to change the table
 ```
 
-## Personalizzare una pagina
+## Customising a page
 
-Ogni pagina è una normale resource Filament: per cambiarne colonne, filtri o azioni si
-estende e si registra al suo posto.
+Every page is a plain Filament resource: to change its columns, filters or actions, extend
+it and register yours instead.
 
 ```php
 use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
@@ -110,38 +112,38 @@ class FailedJobs extends FailedJobResource
 QueueMonitorPlugin::make()->resource('failed', FailedJobs::class)
 ```
 
-Il pacchetto non ha template né stili propri: usa solo componenti di Filament, quindi tema,
-colori e personalizzazioni del pannello valgono anche qui.
+The package ships no templates or styles of its own: it only uses Filament components, so
+your panel's theme, colours and customisations apply here too.
 
-## Traduzioni
+## Translations
 
-Italiano e inglese inclusi; si segue `app.locale`. Per modificarle:
+English and Italian included; `app.locale` decides. To change them:
 
 ```bash
 php artisan vendor:publish --tag=filament-queue-monitor-translations
 ```
 
-## Venendo da moox/jobs
+## Coming from moox/jobs
 
 1. `composer remove moox/jobs`
-2. togliere i quattro plugin `Jobs*Plugin` dal pannello e aggiungere `QueueMonitorPlugin`
-3. eliminare `config/core.php` e `config/jobs.php` se pubblicati
+2. remove the four `Jobs*Plugin` from the panel and add `QueueMonitorPlugin`
+3. delete `config/core.php` and `config/jobs.php` if published
 
-Le tabelle di moox (`job_manager`, `job_batch_manager`, `job_queue_workers`) non servono
-più: restano nel database finché una migrazione non le toglie. Se avevi aggiunto a moox
-l'utente che avvia il job, qui c'è già: `QUEUE_MONITOR_TRACK_OPERATOR=true`.
+moox's tables (`job_manager`, `job_batch_manager`, `job_queue_workers`) are no longer needed:
+they stay in the database until a migration drops them. If you had added to moox the user who
+starts a job, it is built in here: `QUEUE_MONITOR_TRACK_OPERATOR=true`.
 
-## Test
+## Tests
 
 ```bash
 composer install
 composer test
 ```
 
-I test girano su un'app Laravel di prova creata da
-[Orchestra Testbench](https://packages.tools/testbench), con SQLite in memoria.
-La CI li ripete su Laravel 12 e 13.
+Tests run on a throwaway Laravel app created by
+[Orchestra Testbench](https://packages.tools/testbench), with in-memory SQLite. CI repeats
+them on Laravel 12 and 13.
 
-## Licenza
+## License
 
 MIT
