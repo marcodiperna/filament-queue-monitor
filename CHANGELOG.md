@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Plugin: `pages()` chooses which pages to show, for example without Batches for apps
+  that don't use them.
 - The operator's name comes from the attribute set in `operator.name_attribute`
   (`name` by default), for users with separate first and last names and an accessor
   that joins them.

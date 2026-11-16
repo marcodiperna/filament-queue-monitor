@@ -48,12 +48,19 @@ use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 > Senza `authorize()` le pagine sono aperte a **chiunque entri nel pannello**. In
 > produzione conviene sempre limitarle.
 
+Non usi i batch? Mostra solo le pagine che ti servono:
+
+```php
+QueueMonitorPlugin::make()->pages(['queued', 'failed', 'history'])
+```
+
 ## Opzioni
 
 | Metodo | Default | |
 |---|---|---|
 | `navigationGroup(string\|Closure\|null)` | nessuno | gruppo di menu |
 | `navigationSort(int)` | `90` | posizione della prima voce; le altre seguono (+1, +2, +3) |
+| `pages(array)` | tutte | quali pagine mostrare: `queued`, `failed`, `batches`, `history` (quest'ultima solo con lo storico attivo) |
 | `navigationIcons(queued:, failed:, batches:, history:)` | Heroicons | icone delle voci, anche solo alcune |
 | `authorize(Closure)` | tutti | riceve l'utente collegato, restituisce `bool` |
 | `formatJobNameUsing(Closure)` | classe senza namespace | riceve il nome completo del job (`$name`) |

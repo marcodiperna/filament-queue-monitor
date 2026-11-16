@@ -48,12 +48,19 @@ use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 > Without `authorize()` the pages are open to **anyone who can enter the panel**. In
 > production, always restrict them.
 
+Not using batches? Show only the pages you need:
+
+```php
+QueueMonitorPlugin::make()->pages(['queued', 'failed', 'history'])
+```
+
 ## Options
 
 | Method | Default | |
 |---|---|---|
 | `navigationGroup(string\|Closure\|null)` | none | menu group |
 | `navigationSort(int)` | `90` | position of the first item; the others follow (+1, +2, +3) |
+| `pages(array)` | all | which pages to show: `queued`, `failed`, `batches`, `history` (the latter only with the history enabled) |
 | `navigationIcons(queued:, failed:, batches:, history:)` | Heroicons | menu icons, all or some |
 | `authorize(Closure)` | everyone | receives the logged-in user, returns `bool` |
 | `formatJobNameUsing(Closure)` | class without namespace | receives the full job name (`$name`) |

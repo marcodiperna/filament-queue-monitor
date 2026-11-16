@@ -66,6 +66,13 @@ class QueueMonitorPlugin implements Plugin
     ];
 
     /**
+     * The pages to show. History appears only when enabled in the config.
+     *
+     * @var array<int, string>
+     */
+    protected array $pages = ['queued', 'failed', 'batches', 'history'];
+
+    /**
      * @var array{queued: string|BackedEnum|Htmlable, failed: string|BackedEnum|Htmlable, batches: string|BackedEnum|Htmlable, history: string|BackedEnum|Htmlable}
      */
     protected array $navigationIcons = [
@@ -93,12 +100,37 @@ class QueueMonitorPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel->resources(array_values(array_filter([
-            $this->resources['queued'],
-            $this->resources['failed'],
-            $this->resources['batches'],
-            config('queue-monitor.history.enabled') ? $this->resources['history'] : null,
-        ])));
+        $pages = array_filter(
+            $this->pages,
+            fn (string $page): bool => $page !== 'history' || config('queue-monitor.history.enabled'),
+        );
+
+        $panel->resources(array_values(array_map(fn (string $page): string => $this->resources[$page], $pages)));
+    }
+
+    /**
+     * Which pages to show, among queued, failed, batches and history.
+     *
+     *     ->pages(['queued', 'failed'])
+     *
+     * @param  array<int, string>  $pages
+     */
+    public function pages(array $pages): static
+    {
+        foreach ($pages as $page) {
+            $this->ensurePageExists($page);
+        }
+
+        $this->pages = array_values(array_intersect(array_keys($this->resources), $pages));
+
+        return $this;
+    }
+
+    protected function ensurePageExists(string $page): void
+    {
+        if (! array_key_exists($page, $this->resources)) {
+            throw new \InvalidArgumentException("Unknown page: {$page}. Allowed values: ".implode(', ', array_keys($this->resources)).'.');
+        }
     }
 
     public function boot(Panel $panel): void {}
@@ -254,9 +286,7 @@ class QueueMonitorPlugin implements Plugin
      */
     public function resource(string $page, string $resource): static
     {
-        if (! array_key_exists($page, $this->resources)) {
-            throw new \InvalidArgumentException("Unknown page: {$page}. Allowed values: ".implode(', ', array_keys($this->resources)).'.');
-        }
+        $this->ensurePageExists($page);
 
         $this->resources[$page] = $resource;
 

@@ -6,6 +6,7 @@ namespace MarcoDiPerna\FilamentQueueMonitor\Tests;
 
 use Filament\Actions\Action;
 use Filament\Actions\Testing\TestAction;
+use Filament\Panel;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Bus;
 use Livewire\Livewire;
@@ -13,9 +14,11 @@ use MarcoDiPerna\FilamentQueueMonitor\Models\JobBatch;
 use MarcoDiPerna\FilamentQueueMonitor\Models\JobRun;
 use MarcoDiPerna\FilamentQueueMonitor\Models\QueuedJob;
 use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\Pages\ListFailedJobs;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\JobRuns\JobRunResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\JobRuns\Pages\ListJobRuns;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
 use MarcoDiPerna\FilamentQueueMonitor\Support\Duration;
 use MarcoDiPerna\FilamentQueueMonitor\Support\ErrorModal;
 use MarcoDiPerna\FilamentQueueMonitor\Tests\Fixtures\CustomFailedJobResource;
@@ -178,6 +181,29 @@ class HistoryTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
         $plugin->resource('inesistente', \stdClass::class);
+    }
+
+    #[Test]
+    public function only_the_chosen_pages_are_registered(): void
+    {
+        $panel = Panel::make()->id('soci');
+        QueueMonitorPlugin::make()->pages(['history', 'queued', 'failed'])->register($panel);
+
+        $this->assertSame([QueuedJobResource::class, FailedJobResource::class, JobRunResource::class], array_values($panel->getResources()));
+
+        $this->expectException(\InvalidArgumentException::class);
+        QueueMonitorPlugin::make()->pages(['queued', 'inesistente']);
+    }
+
+    #[Test]
+    public function the_history_page_needs_the_history_enabled(): void
+    {
+        config()->set('queue-monitor.history.enabled', false);
+
+        $panel = Panel::make()->id('soci');
+        QueueMonitorPlugin::make()->pages(['failed', 'history'])->register($panel);
+
+        $this->assertSame([FailedJobResource::class], array_values($panel->getResources()));
     }
 
     #[Test]
