@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MarcoDiPerna\FilamentQueueMonitor\Tests;
 
 use Filament\Actions\Testing\TestAction;
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
@@ -16,6 +17,7 @@ use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\Pages\ListFailedJobs;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\JobBatchResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\Pages\ListJobBatches;
+use MarcoDiPerna\FilamentQueueMonitor\Resources\JobRuns\JobRunResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\Pages\ListQueuedJobs;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
 use PHPUnit\Framework\Attributes\Test;
@@ -51,6 +53,13 @@ class QueueMonitorTest extends TestCase
         ]);
 
         return FailedJob::query()->latest('id')->first();
+    }
+
+    #[Test]
+    public function the_history_is_on_by_default(): void
+    {
+        $this->assertTrue(config('queue-monitor.history.enabled'));
+        $this->assertContains(JobRunResource::class, Filament::getPanel('admin')->getResources());
     }
 
     #[Test]

@@ -8,15 +8,15 @@ return [
     |--------------------------------------------------------------------------
     |
     | Laravel deletes a job from the queue as soon as it finishes: without a
-    | history there is no way to know whether last night's backup ran. When
-    | enabled, every run leaves a row in queue_monitor_runs, pruned daily
-    | after keep_days: seven days are enough for the stats, which cover the
-    | last week.
+    | history there is no way to know whether last night's backup ran. It is
+    | on by default: every run leaves a row in queue_monitor_runs, pruned
+    | daily after keep_days: seven days are enough for the stats, which cover
+    | the last week. Set QUEUE_MONITOR_HISTORY=false to turn it off.
     |
     */
 
     'history' => [
-        'enabled' => env('QUEUE_MONITOR_HISTORY', false),
+        'enabled' => env('QUEUE_MONITOR_HISTORY', true),
         'keep_days' => (int) env('QUEUE_MONITOR_KEEP_DAYS', 7),
         // Days in the History stats trend. The history is never pruned below
         // this threshold.

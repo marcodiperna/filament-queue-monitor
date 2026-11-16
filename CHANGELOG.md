@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.0 — 2026-11-16
+
+- The run history is now **on by default**: the next `php artisan migrate` creates the
+  `queue_monitor_runs` table. Set `QUEUE_MONITOR_HISTORY=false` to keep it off.
+
 ## v1.2.0 — 2026-11-16
 
 - Plugin: `pages()` chooses which pages to show, for example without Batches for apps

@@ -5,15 +5,15 @@
 Laravel queues, failed jobs and batches in your [Filament](https://filamentphp.com) panel.
 
 It reads Laravel's **standard tables** for the database driver — `jobs`, `failed_jobs`,
-`job_batches`: what you see is what the worker sees. Out of the box it adds no tables,
-listeners or migrations; the run history and operator tracking are opt-in.
+`job_batches`: what you see is what the worker sees. On top of them it keeps a run history,
+on by default, in a table of its own; operator tracking is opt-in.
 
 | Page | Shows | Actions |
 |---|---|---|
 | **Queue** | waiting, running and scheduled jobs, with attempts and times | delete a stuck job |
 | **Failed jobs** | job, queue, first line of the error; the full exception on click | retry (one, selected, all), delete, flush |
 | **Batches** | progress, total and failed jobs, state | — |
-| **History** *(optional)* | every run: outcome, duration, attempt, error | filters by state, job and day |
+| **History** | every run: outcome, duration, attempt, error | filters by state, job and day |
 
 The Queue and Failed jobs menu items show a counter when not empty. Queue and History have
 stats on top: how many jobs are waiting and for how long the oldest has been; for the
@@ -72,20 +72,21 @@ QueueMonitorPlugin::make()->pages(['queued', 'failed', 'history'])
 
 ## History and operator
 
-Two optional features, switched on from the configuration rather than the plugin, because
-they must run in the worker too, where Filament panels are not loaded:
+Two features driven by the configuration rather than the plugin, because they must run in
+the worker too, where Filament panels are not loaded:
 
 ```dotenv
-QUEUE_MONITOR_HISTORY=true          # one row per run, History page
+QUEUE_MONITOR_HISTORY=true          # default; one row per run, History page
 QUEUE_MONITOR_KEEP_DAYS=7           # daily cleanup of older rows
 QUEUE_MONITOR_STATS_DAYS=7          # days in the stats trend
 QUEUE_MONITOR_TRACK_OPERATOR=true   # who started the job
 ```
 
 **History.** Laravel deletes a job as soon as it finishes: without a history there is no way
-to know whether last night's backup ran. When enabled, the package creates the
-`queue_monitor_runs` table through your usual `php artisan migrate` and prunes it daily
-(`model:prune` in the scheduler), never below the stats period.
+to know whether last night's backup ran. The package creates the `queue_monitor_runs` table
+through your usual `php artisan migrate` and prunes it daily (`model:prune` in the
+scheduler), never below the stats period. `QUEUE_MONITOR_HISTORY=false` turns it off, along
+with its table and page.
 
 **Operator.** The logged-in user's id goes into the payload at dispatch time, while the
 session still exists. Jobs queued by a running job inherit their parent's operator, so a

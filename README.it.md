@@ -5,15 +5,15 @@
 Code, job falliti e batch di Laravel nel pannello [Filament](https://filamentphp.com).
 
 Legge le **tabelle standard** del driver database di Laravel — `jobs`, `failed_jobs`,
-`job_batches`: quello che vedi è quello che vede il worker. Di base non aggiunge tabelle,
-listener né migrazioni; storico e operatore si attivano solo se servono.
+`job_batches`: quello che vedi è quello che vede il worker. In più tiene uno storico delle
+esecuzioni, attivo di default, in una tabella sua; l'operatore si attiva solo se serve.
 
 | Pagina | Cosa mostra | Azioni |
 |---|---|---|
 | **Code** | job in attesa, in esecuzione e programmati, con tentativi e orari | elimina un job bloccato |
 | **Job falliti** | job, coda, prima riga dell'errore; l'eccezione completa nel dettaglio | riprova (singolo, selezionati, tutti), elimina, svuota |
 | **Batch** | avanzamento, job totali e falliti, stato | — |
-| **Storico** *(opzionale)* | ogni esecuzione: esito, durata, tentativo, errore | filtri per stato, job e giorno |
+| **Storico** | ogni esecuzione: esito, durata, tentativo, errore | filtri per stato, job e giorno |
 
 Le voci di menu di Code e Job falliti mostrano un contatore quando non sono vuote. Code e
 Storico hanno in testa le statistiche: quanti job aspettano e da quanto il più vecchio; per
@@ -72,20 +72,21 @@ QueueMonitorPlugin::make()->pages(['queued', 'failed', 'history'])
 
 ## Storico e operatore
 
-Due funzioni opzionali, che si attivano dalla configurazione e non dal plugin, perché
-devono girare anche nel worker, dove i pannelli Filament non si caricano:
+Due funzioni che si governano dalla configurazione e non dal plugin, perché devono girare
+anche nel worker, dove i pannelli Filament non si caricano:
 
 ```dotenv
-QUEUE_MONITOR_HISTORY=true          # una riga per ogni esecuzione, pagina Storico
+QUEUE_MONITOR_HISTORY=true          # default; una riga per ogni esecuzione, pagina Storico
 QUEUE_MONITOR_KEEP_DAYS=7           # pulizia giornaliera delle righe più vecchie
 QUEUE_MONITOR_STATS_DAYS=7          # giorni dell'andamento nelle statistiche
 QUEUE_MONITOR_TRACK_OPERATOR=true   # chi ha avviato il job
 ```
 
 **Storico.** Laravel cancella un job appena finisce: senza storico non si sa se il backup di
-stanotte è girato. Attivandolo, il pacchetto crea la tabella `queue_monitor_runs` con il
-normale `php artisan migrate` e la ripulisce ogni giorno (`model:prune` nello scheduler),
-senza mai scendere sotto i giorni delle statistiche.
+stanotte è girato. Il pacchetto crea la tabella `queue_monitor_runs` con il normale
+`php artisan migrate` e la ripulisce ogni giorno (`model:prune` nello scheduler), senza mai
+scendere sotto i giorni delle statistiche. `QUEUE_MONITOR_HISTORY=false` lo spegne, insieme
+alla sua tabella e alla sua pagina.
 
 **Operatore.** L'id dell'utente collegato entra nel payload al momento del dispatch, quando la
 sessione c'è ancora. I job accodati da un job in esecuzione ereditano l'operatore del padre,
