@@ -57,7 +57,7 @@ use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 | `navigationIcons(queued:, failed:, batches:, history:)` | Heroicons | menu icons, all or some |
 | `authorize(Closure)` | everyone | receives the logged-in user, returns `bool` |
 | `formatJobNameUsing(Closure)` | class without namespace | receives the full job name (`$name`) |
-| `formatOperatorUsing(Closure)` | `name` attribute | receives the user model (`$user`) |
+| `formatOperatorUsing(Closure)` | `operator.name_attribute` (`name`) | receives the user model (`$user`) |
 | `hideQueueColumn()` | visible | for apps with a single queue |
 | `groupRecordActions(bool)` | `true` | row actions in Filament's three-dots menu; `false` shows them inline |
 | `modifyErrorModalUsing(Closure)` | — | reshapes the error modal; receives and returns the `Action` |
@@ -86,7 +86,19 @@ whole chain stays attributed to whoever pressed the button. It shows on Queue, F
 and History; on Batches when the history is enabled. Jobs started without a user (scheduler,
 commands) read as *System*.
 
-To customise the rest (payload key, user model, table name):
+The name comes from the `name` attribute, which Laravel always has. If your users also have a
+surname, `operator.name_attribute` in the configuration names the column or accessor to show
+(for example `fullName`). For anything more elaborate there is `formatOperatorUsing()`.
+
+```php
+// config/queue-monitor.php
+'operator' => [
+    // ...
+    'name_attribute' => 'fullName',
+],
+```
+
+To customise the rest (payload key, user model, name attribute, table name):
 
 ```bash
 php artisan vendor:publish --tag=filament-queue-monitor-config

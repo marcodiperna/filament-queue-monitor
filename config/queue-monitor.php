@@ -33,12 +33,17 @@ return [
     | the session still exists: in the worker auth() is empty. Jobs queued by
     | a running job inherit their parent's operator.
     |
+    | The displayed name comes from name_attribute: name always exists, but
+    | if users also have a surname, set the column or accessor that joins
+    | them (full_name, fullName).
+    |
     */
 
     'operator' => [
         'track' => env('QUEUE_MONITOR_TRACK_OPERATOR', false),
         'payload_key' => 'operator_id',
         'model' => null,
+        'name_attribute' => 'name',
     ],
 
 ];

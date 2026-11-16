@@ -111,6 +111,20 @@ class HistoryTest extends TestCase
     }
 
     #[Test]
+    public function the_operator_name_can_come_from_another_attribute(): void
+    {
+        config()->set('queue-monitor.operator.name_attribute', 'fullName');
+
+        $admin = $this->admin();
+        $admin->update(['surname' => 'Rossi']);
+        $this->actingAs($admin);
+        SucceedingJob::dispatch();
+        $this->work();
+
+        Livewire::test(ListJobRuns::class)->assertSee('Admin Rossi');
+    }
+
+    #[Test]
     public function the_history_page_and_its_stats_render(): void
     {
         $this->actingAs($this->admin());

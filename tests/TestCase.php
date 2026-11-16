@@ -73,6 +73,7 @@ abstract class TestCase extends Orchestra
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('surname')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();

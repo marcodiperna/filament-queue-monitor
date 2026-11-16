@@ -18,6 +18,7 @@ use MarcoDiPerna\FilamentQueueMonitor\Resources\FailedJobs\FailedJobResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\JobBatches\JobBatchResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\JobRuns\JobRunResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
+use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
  * Queue, failed jobs and batches in the panel, read from the standard tables
@@ -193,7 +194,7 @@ class QueueMonitorPlugin implements Plugin
 
     /**
      * How to show the operator who started the job. Receives the user model;
-     * by default its name attribute is used.
+     * by default the attribute set in operator.name_attribute is used.
      */
     public function formatOperatorUsing(Closure $callback): static
     {
@@ -206,7 +207,7 @@ class QueueMonitorPlugin implements Plugin
     {
         return $this->formatOperatorUsing
             ? (string) $this->evaluate($this->formatOperatorUsing, ['user' => $user, 'record' => $user])
-            : (string) ($user->getAttribute('name') ?? $user->getKey());
+            : (string) ($user->getAttribute(Operator::nameAttribute()) ?: $user->getKey());
     }
 
     /**

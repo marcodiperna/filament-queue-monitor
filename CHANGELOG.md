@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- The operator's name comes from the attribute set in `operator.name_attribute`
+  (`name` by default), for users with separate first and last names and an accessor
+  that joins them.
+- Operator names are cached per request instead of per process: a worker or an Octane
+  app no longer shows a stale name after a change.
 - Code comments, error messages and the package description are now in English.
 
 ## v1.1.0 — 2026-11-14

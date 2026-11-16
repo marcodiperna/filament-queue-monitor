@@ -50,6 +50,11 @@ final class Operator
             ?? User::class;
     }
 
+    public static function nameAttribute(): string
+    {
+        return (string) (config('queue-monitor.operator.name_attribute') ?: 'name');
+    }
+
     public static function register(): void
     {
         Queue::createPayloadUsing(fn (): array => [
@@ -84,12 +89,10 @@ final class Operator
         return is_numeric($id) ? (int) $id : null;
     }
 
-    /** @var array<int, string|null> */
-    private static array $names = [];
-
     /**
      * The name to show for an id, or null if the user no longer exists.
-     * A list often repeats the same people: each one is loaded once.
+     * A list often repeats the same people: each one is loaded once per
+     * request.
      */
     public static function name(?int $id): ?string
     {
@@ -97,13 +100,10 @@ final class Operator
             return null;
         }
 
-        if (! array_key_exists($id, self::$names)) {
-            $model = self::model();
-            $user = $model::query()->find($id);
+        return once(function () use ($id): ?string {
+            $user = self::model()::query()->find($id);
 
-            self::$names[$id] = $user ? QueueMonitorPlugin::get()->formatOperator($user) : null;
-        }
-
-        return self::$names[$id];
+            return $user ? QueueMonitorPlugin::get()->formatOperator($user) : null;
+        });
     }
 }
