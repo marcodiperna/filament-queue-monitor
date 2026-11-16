@@ -9,8 +9,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 use MarcoDiPerna\FilamentQueueMonitor\Models\QueuedJob;
 
 /**
- * La coda in tre numeri, e da quanto aspetta il job piu' vecchio: se cresce,
- * il worker non sta girando o non tiene il passo.
+ * The queue in three numbers, and how long the oldest job has been waiting:
+ * if it grows, the worker is not running or cannot keep up.
  */
 class QueueOverview extends StatsOverviewWidget
 {

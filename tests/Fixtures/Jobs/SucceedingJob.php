@@ -14,6 +14,6 @@ class SucceedingJob implements ShouldQueue
 
     public function handle(): void
     {
-        // lavoro andato a buon fine
+        // work done successfully
     }
 }

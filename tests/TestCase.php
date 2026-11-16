@@ -65,8 +65,8 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * Le tabelle che Laravel crea con queue:table, queue:failed-table e
-     * queue:batches-table, piu' gli utenti.
+     * The tables Laravel creates with queue:table, queue:failed-table and
+     * queue:batches-table, plus users.
      */
     protected function defineDatabaseMigrations(): void
     {

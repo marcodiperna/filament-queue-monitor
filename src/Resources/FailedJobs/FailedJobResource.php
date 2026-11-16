@@ -29,8 +29,8 @@ use MarcoDiPerna\FilamentQueueMonitor\Support\Columns;
 use MarcoDiPerna\FilamentQueueMonitor\Support\ErrorModal;
 
 /**
- * I job falliti: l'errore per capire cosa e' andato storto e la possibilita'
- * di riprovarli una volta sistemata la causa.
+ * Failed jobs: the error, to understand what went wrong, and the option to
+ * retry them once the cause is fixed.
  */
 class FailedJobResource extends Resource
 {
@@ -70,8 +70,8 @@ class FailedJobResource extends Resource
     }
 
     /**
-     * Rimette in coda i job dati: e' lo stesso queue:retry della riga di
-     * comando, cosi' il comportamento non si discosta da quello di Laravel.
+     * Pushes the given jobs back onto the queue: it is the same queue:retry as
+     * the command line, so the behaviour never drifts from Laravel's.
      *
      * @param  array<int, string>  $uuids
      */

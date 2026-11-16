@@ -18,8 +18,8 @@ class ListFailedJobs extends ListRecords
     protected static string $resource = FailedJobResource::class;
 
     /**
-     * La resource configurata nel plugin: se l'app ne ha registrata una sua
-     * sottoclasse, tabella e azioni sono le sue.
+     * The resource configured in the plugin: if the app registered its own
+     * subclass, table and actions are the subclass's.
      */
     public static function getResource(): string
     {
@@ -27,8 +27,8 @@ class ListFailedJobs extends ListRecords
     }
 
     /**
-     * Il titolo e' quello della voce di menu: chi clicca "Storico" deve
-     * trovare "Storico", non il nome del modello.
+     * The title is the menu item's: whoever clicks "History" should land on
+     * "History", not on the model name.
      */
     public function getTitle(): string
     {

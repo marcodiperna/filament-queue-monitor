@@ -8,8 +8,8 @@ use Filament\Tables\Columns\TextColumn;
 use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 /**
- * Le colonne che le pagine hanno in comune, cosi' un job o un operatore si
- * leggono allo stesso modo ovunque.
+ * Columns shared by the pages, so a job or an operator reads the same
+ * everywhere.
  */
 final class Columns
 {
@@ -32,8 +32,8 @@ final class Columns
     }
 
     /**
-     * Chi ha avviato il job. Vuota se il job non e' partito da un utente:
-     * schedulatore, comandi, altri processi.
+     * Who started the job. Empty when no user did: scheduler, commands,
+     * other processes.
      */
     public static function operator(): TextColumn
     {
@@ -45,8 +45,8 @@ final class Columns
     }
 
     /**
-     * L'errore in una riga: nome breve della classe e messaggio. Il clic apre
-     * il testo intero, con il pulsante per copiarlo.
+     * The error on one line: short class name and message. A click opens the
+     * full text, with a button to copy it.
      */
     public static function error(string $attribute = 'exception'): TextColumn
     {

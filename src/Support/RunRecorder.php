@@ -16,14 +16,13 @@ use MarcoDiPerna\FilamentQueueMonitor\Models\QueuedJob;
 use Throwable;
 
 /**
- * Scrive lo storico: una riga quando il worker prende un job, completata
- * quando finisce, fallisce o verra' ritentato.
+ * Writes the history: one row when the worker picks up a job, completed when
+ * it succeeds, fails or is going to be retried.
  */
 final class RunRecorder
 {
     /**
-     * Le esecuzioni aperte da questo worker: id della riga e istante di
-     * partenza, per job.
+     * Runs opened by this worker: row id and start time, per job.
      *
      * @var array<string, array{id: int, start: float}>
      */
@@ -82,9 +81,9 @@ final class RunRecorder
     }
 
     /**
-     * L'id del batch sta nel comando serializzato: si legge con
-     * un'espressione regolare invece di deserializzare, perche' una lavorazione
-     * a batch puo' passare di qui centinaia di migliaia di volte.
+     * The batch id sits in the serialized command: it is read with a regular
+     * expression instead of unserializing, because a batch can pass through
+     * here hundreds of thousands of times.
      *
      * @param  array<string, mixed>  $payload
      */

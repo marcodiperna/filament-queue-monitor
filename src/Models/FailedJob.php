@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
- * Un job fallito, dalla tabella dei falliti configurata in queue.failed.
+ * A failed job, from the failed jobs table configured in queue.failed.
  */
 class FailedJob extends Model
 {
@@ -46,7 +46,7 @@ class FailedJob extends Model
     }
 
     /**
-     * La prima riga dell'eccezione: il messaggio, senza lo stack.
+     * The first line of the exception: the message, without the stack trace.
      */
     protected function error(): Attribute
     {

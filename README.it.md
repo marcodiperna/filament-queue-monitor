@@ -5,8 +5,8 @@
 Code, job falliti e batch di Laravel nel pannello [Filament](https://filamentphp.com).
 
 Legge le **tabelle standard** del driver database di Laravel — `jobs`, `failed_jobs`,
-`job_batches` — senza tabelle aggiuntive, senza listener e senza migrazioni: quello che
-vedi è quello che vede il worker.
+`job_batches`: quello che vedi è quello che vede il worker. Di base non aggiunge tabelle,
+listener né migrazioni; storico e operatore si attivano solo se servono.
 
 | Pagina | Cosa mostra | Azioni |
 |---|---|---|

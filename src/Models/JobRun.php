@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
- * Un'esecuzione di un job: quando e' partita, quanto e' durata, com'e'
- * finita e chi l'aveva avviata.
+ * One run of a job: when it started, how long it took, how it ended and who
+ * started it.
  */
 class JobRun extends Model
 {
@@ -24,7 +24,7 @@ class JobRun extends Model
 
     public const STATUS_FAILED = 'failed';
 
-    /** Eccezione, ma il job verra' ritentato. */
+    /** An exception, but the job will be retried. */
     public const STATUS_RETRIED = 'retried';
 
     public $timestamps = false;
@@ -55,8 +55,8 @@ class JobRun extends Model
     }
 
     /**
-     * Quanti giorni tenere: quelli configurati, ma mai meno di quelli che le
-     * statistiche mostrano, o il grafico avrebbe giorni vuoti.
+     * How many days to keep: the configured ones, but never fewer than the
+     * stats show, or the chart would have empty days.
      */
     public static function keepDays(): int
     {

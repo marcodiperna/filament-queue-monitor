@@ -5,8 +5,8 @@
 Laravel queues, failed jobs and batches in your [Filament](https://filamentphp.com) panel.
 
 It reads Laravel's **standard tables** for the database driver — `jobs`, `failed_jobs`,
-`job_batches` — with no extra tables, listeners or migrations: what you see is what the
-worker sees.
+`job_batches`: what you see is what the worker sees. Out of the box it adds no tables,
+listeners or migrations; the run history and operator tracking are opt-in.
 
 | Page | Shows | Actions |
 |---|---|---|

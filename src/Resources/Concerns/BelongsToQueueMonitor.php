@@ -9,8 +9,8 @@ use Illuminate\Contracts\Support\Htmlable;
 use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 /**
- * Quello che le tre risorse prendono dal plugin: accesso, gruppo, ordine e
- * icona. Nessuna compare nella ricerca globale e nessuna si crea a mano.
+ * What the resources take from the plugin: access, group, sort order and
+ * icon. None shows up in global search and none can be created by hand.
  */
 trait BelongsToQueueMonitor
 {

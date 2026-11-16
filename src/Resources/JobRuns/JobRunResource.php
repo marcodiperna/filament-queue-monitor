@@ -20,8 +20,8 @@ use MarcoDiPerna\FilamentQueueMonitor\Support\Duration;
 use MarcoDiPerna\FilamentQueueMonitor\Widgets\HistoryOverview;
 
 /**
- * Lo storico delle esecuzioni: cosa e' girato, quanto e' durato, com'e'
- * finito e chi l'aveva avviato.
+ * The run history: what ran, how long it took, how it ended and who started
+ * it.
  */
 class JobRunResource extends Resource
 {

@@ -1,6 +1,6 @@
 {
     "name": "marcodiperna/filament-queue-monitor",
-    "description": "Code, job falliti e batch di Laravel nel pannello Filament, sulle tabelle standard del driver database: nessuna tabella in piu', nessun listener.",
+    "description": "Laravel queues, failed jobs and batches in Filament, read from the database driver's standard tables, with optional run history and operator tracking.",
     "keywords": [
         "laravel",
         "filament",

@@ -17,8 +17,8 @@ use MarcoDiPerna\FilamentQueueMonitor\Support\Columns;
 use MarcoDiPerna\FilamentQueueMonitor\Widgets\QueueOverview;
 
 /**
- * La coda: cosa aspetta il worker, cosa sta eseguendo e cosa partira' piu'
- * avanti. Sola lettura, tranne l'eliminazione di un job bloccato.
+ * The queue: what the worker is waiting on, what it is running and what will
+ * start later. Read-only, except for deleting a stuck job.
  */
 class QueuedJobResource extends Resource
 {

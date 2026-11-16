@@ -13,9 +13,9 @@ use Illuminate\Support\Js;
 use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 /**
- * L'errore di un job, intero e leggibile, e un pulsante che lo copia per
- * incollarlo in un ticket o in una chat. Solo componenti standard di
- * Filament: l'aspetto lo decide il tema del pannello.
+ * A job's full error, readable, with a button that copies it for a ticket or
+ * a chat. Only standard Filament components: the panel theme decides how it
+ * looks.
  */
 final class ErrorModal
 {
@@ -43,7 +43,7 @@ final class ErrorModal
     }
 
     /**
-     * Copia negli appunti dal browser, senza passare dal server.
+     * Copies to the clipboard in the browser, without a server round trip.
      */
     public static function copyAction(string $text): Action
     {
@@ -63,9 +63,9 @@ final class ErrorModal
             ->copyable()
             ->copyableState(fn (?string $state): ?string => $state)
             ->copyMessage(__('filament-queue-monitor::queue-monitor.error.copied'))
-            // Un blocco di codice Markdown: a spaziatura fissa e a capo come
-            // l'originale, con lo stile "prose" del pannello. Niente stili
-            // del pacchetto, cosi' tema e colori restano quelli del panel.
+            // A Markdown code block: monospaced, with the original line breaks
+            // and the panel's "prose" style. No package styles, so theme and
+            // colours stay the panel's own.
             ->markdown()
             ->formatStateUsing(fn (?string $state): string => "```\n".str_replace('```', "'''", (string) $state)."\n```");
     }

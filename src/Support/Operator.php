@@ -15,19 +15,19 @@ use Illuminate\Support\Facades\Queue;
 use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 /**
- * Chi ha avviato un job.
+ * Who started a job.
  *
- * L'operatore si cattura al dispatch, quando la sessione c'e' ancora: nel
- * worker auth() e' vuota, quindi chiederlo dentro il job arriverebbe tardi.
- * L'id finisce nel payload di ogni job senza che i job debbano saperne niente.
+ * The operator is captured at dispatch time, while the session still exists:
+ * in the worker auth() is empty, so asking from inside the job would be too
+ * late. The id goes into every job's payload without the jobs knowing.
  *
- * I job accodati da un job in esecuzione girano nel worker, senza sessione:
- * ereditano l'operatore del padre, cosi' un'intera catena resta attribuita a
- * chi ha premuto il bottone.
+ * Jobs queued by a running job run in the worker, without a session: they
+ * inherit their parent's operator, so a whole chain stays attributed to
+ * whoever pressed the button.
  */
 final class Operator
 {
-    /** L'operatore del job che il worker sta eseguendo adesso. */
+    /** The operator of the job the worker is running right now. */
     private static ?int $current = null;
 
     public static function enabled(): bool
@@ -58,9 +58,9 @@ final class Operator
 
         Event::listen(JobProcessing::class, fn (JobProcessing $event) => self::$current = self::fromJob($event->job));
 
-        // L'operatore vale per il job in corso e per i figli che accoda: appena
-        // finisce va dimenticato, o il prossimo job del worker si ritroverebbe
-        // attribuito a chi non c'entra.
+        // The operator applies to the running job and the children it queues:
+        // once it ends it must be forgotten, or the worker's next job would be
+        // attributed to someone unrelated.
         Event::listen(JobProcessed::class, fn () => self::$current = null);
         Event::listen(JobFailed::class, fn () => self::$current = null);
     }
@@ -88,8 +88,8 @@ final class Operator
     private static array $names = [];
 
     /**
-     * Il nome da mostrare per un id, o null se l'utente non esiste piu'.
-     * Un elenco ripete spesso le stesse persone: ognuna si legge una volta.
+     * The name to show for an id, or null if the user no longer exists.
+     * A list often repeats the same people: each one is loaded once.
      */
     public static function name(?int $id): ?string
     {

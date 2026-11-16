@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace MarcoDiPerna\FilamentQueueMonitor\Support;
 
 /**
- * Una durata in millisecondi detta come la direbbe una persona: 850 ms,
+ * A duration in milliseconds, written the way a person would say it: 850 ms,
  * 4,2 s, 3 min 10 s, 2 h 5 min.
  */
 final class Duration
 {
     /**
-     * Accetta anche stringhe: AVG e SUM su MySQL e MariaDB restituiscono
-     * decimali come testo.
+     * Strings are accepted too: AVG and SUM on MySQL and MariaDB return
+     * decimals as text.
      */
     public static function format(int|float|string|null $milliseconds): string
     {

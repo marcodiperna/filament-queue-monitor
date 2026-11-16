@@ -27,7 +27,7 @@ use MarcoDiPerna\FilamentQueueMonitor\Widgets\HistoryOverview;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
- * Storico, operatore e statistiche, con job veri eseguiti da un worker.
+ * History, operator and stats, with real jobs run by a worker.
  */
 class HistoryTest extends TestCase
 {
@@ -197,7 +197,7 @@ class HistoryTest extends TestCase
         $this->assertSame('4,2 s', Duration::format(4200));
         $this->assertSame('3 min 10 s', Duration::format(190_000));
         $this->assertSame('2 h 5 min', Duration::format(7_500_000));
-        // Come arrivano AVG e SUM da MySQL e MariaDB.
+        // How AVG and SUM come back from MySQL and MariaDB.
         $this->assertSame('1,5 s', Duration::format('1523.4000'));
         $this->assertSame('—', Duration::format(null));
     }

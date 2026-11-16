@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Un gruppo di job lanciati insieme, dalla tabella configurata in
+ * A group of jobs dispatched together, from the table configured in
  * queue.batching.
  */
 class JobBatch extends Model
@@ -68,9 +68,8 @@ class JobBatch extends Model
     }
 
     /**
-     * Chi ha avviato il batch: l'operatore della sua prima esecuzione. Si
-     * ricava dallo storico, cosi' la tabella job_batches di Laravel resta
-     * com'e'.
+     * Who started the batch: the operator of its first run. It comes from the
+     * history, so Laravel's job_batches table stays untouched.
      */
     protected function operatorId(): Attribute
     {

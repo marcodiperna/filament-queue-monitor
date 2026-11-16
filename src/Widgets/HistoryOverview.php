@@ -11,9 +11,9 @@ use MarcoDiPerna\FilamentQueueMonitor\Models\JobRun;
 use MarcoDiPerna\FilamentQueueMonitor\Support\Duration;
 
 /**
- * Le ultime 24 ore: quanto ha lavorato la coda, quanto e' andato storto e
- * quanto durano i job. Le linee sotto ai numeri sono l'andamento dei giorni
- * configurati in queue-monitor.history.stats_days.
+ * The last 24 hours: how much the queue worked, how much went wrong and how
+ * long jobs take. The lines under the numbers show the trend over the days
+ * set in queue-monitor.history.stats_days.
  */
 class HistoryOverview extends StatsOverviewWidget
 {

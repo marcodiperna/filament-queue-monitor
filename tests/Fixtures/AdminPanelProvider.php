@@ -9,8 +9,8 @@ use Filament\PanelProvider;
 use MarcoDiPerna\FilamentQueueMonitor\QueueMonitorPlugin;
 
 /**
- * Un pannello come quello di un'applicazione vera: il plugin limitato a chi
- * ha l'email dell'amministratore.
+ * A panel like a real application's: the plugin limited to whoever has the
+ * administrator's email.
  */
 class AdminPanelProvider extends PanelProvider
 {

@@ -11,9 +11,9 @@ use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 use MarcoDiPerna\FilamentQueueMonitor\Support\RunRecorder;
 
 /**
- * Lo storico e l'operatore si attivano qui, dalla configurazione, e non dal
- * plugin: devono girare anche nel worker, dove i pannelli Filament non si
- * caricano.
+ * History and operator tracking are switched on here, from the config, and
+ * not from the plugin: they must run in the worker too, where Filament panels
+ * are not loaded.
  */
 class QueueMonitorServiceProvider extends ServiceProvider
 {

@@ -20,16 +20,16 @@ use MarcoDiPerna\FilamentQueueMonitor\Resources\JobRuns\JobRunResource;
 use MarcoDiPerna\FilamentQueueMonitor\Resources\QueuedJobs\QueuedJobResource;
 
 /**
- * Code, job falliti e batch nel pannello, letti dalle tabelle standard del
- * driver database di Laravel.
+ * Queue, failed jobs and batches in the panel, read from the standard tables
+ * of Laravel's database driver.
  *
  *     ->plugins([
  *         QueueMonitorPlugin::make()
- *             ->navigationGroup('Sistema')
- *             ->authorize(fn ($user) => $user?->can('gestire sistema')),
+ *             ->navigationGroup('System')
+ *             ->authorize(fn ($user) => $user?->can('manage system')),
  *     ])
  *
- * Senza authorize() le pagine sono aperte a chi entra nel pannello.
+ * Without authorize() the pages are open to anyone who can enter the panel.
  */
 class QueueMonitorPlugin implements Plugin
 {
@@ -52,8 +52,8 @@ class QueueMonitorPlugin implements Plugin
     protected ?Closure $modifyErrorModalUsing = null;
 
     /**
-     * Le risorse registrate nel pannello. Un'app puo' sostituirne una con una
-     * sua sottoclasse per cambiarne colonne, filtri o azioni.
+     * The resources registered in the panel. An app can replace one with its
+     * own subclass to change columns, filters or actions.
      *
      * @var array{queued: class-string, failed: class-string, batches: class-string, history: class-string}
      */
@@ -115,7 +115,7 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * La posizione della prima voce; le altre seguono.
+     * The position of the first item; the others follow.
      */
     public function navigationSort(int $sort): static
     {
@@ -151,7 +151,7 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * Chi puo' vedere le pagine. Riceve l'utente collegato.
+     * Who can see the pages. Receives the logged-in user.
      */
     public function authorize(Closure $callback): static
     {
@@ -172,8 +172,8 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * Come mostrare il nome di un job. Riceve il nome salvato da Laravel, di
-     * solito la classe completa; senza, si mostra la classe senza namespace.
+     * How to show a job's name. Receives the name Laravel stored, usually the
+     * fully qualified class; by default the class without namespace is shown.
      */
     public function formatJobNameUsing(Closure $callback): static
     {
@@ -192,8 +192,8 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * Come mostrare l'operatore che ha avviato il job. Riceve il modello
-     * utente; senza, si usa il suo attributo name.
+     * How to show the operator who started the job. Receives the user model;
+     * by default its name attribute is used.
      */
     public function formatOperatorUsing(Closure $callback): static
     {
@@ -210,8 +210,8 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * Nasconde la colonna della coda: chi usa una coda sola leggerebbe la
-     * stessa parola su ogni riga.
+     * Hides the queue column: with a single queue it would repeat the same
+     * word on every row.
      */
     public function hideQueueColumn(bool $condition = true): static
     {
@@ -226,8 +226,8 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * Le azioni di riga in un menu (i tre puntini di Filament), come di solito
-     * nei pannelli; false le mostra come pulsanti affiancati.
+     * Row actions in a menu (Filament's three dots), as panels usually do;
+     * false shows them as inline buttons.
      */
     public function groupRecordActions(bool $condition = true): static
     {
@@ -246,15 +246,15 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * Sostituisce una delle pagine con una sottoclasse dell'app:
-     * queued, failed, batches o history.
+     * Replaces one of the pages with a subclass from the app:
+     * queued, failed, batches or history.
      *
      *     ->resource('failed', App\\Filament\\FailedJobs::class)
      */
     public function resource(string $page, string $resource): static
     {
         if (! array_key_exists($page, $this->resources)) {
-            throw new \InvalidArgumentException("Pagina sconosciuta: {$page}. Valori ammessi: ".implode(', ', array_keys($this->resources)).'.');
+            throw new \InvalidArgumentException("Unknown page: {$page}. Allowed values: ".implode(', ', array_keys($this->resources)).'.');
         }
 
         $this->resources[$page] = $resource;
@@ -268,7 +268,7 @@ class QueueMonitorPlugin implements Plugin
     }
 
     /**
-     * Ritocca la modale dell'errore: larghezza, pulsanti, testi.
+     * Reshapes the error modal: width, buttons, texts.
      *
      *     ->modifyErrorModalUsing(fn (Action $action) => $action->modalWidth('3xl'))
      */

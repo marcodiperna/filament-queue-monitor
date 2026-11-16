@@ -4,33 +4,34 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Storico delle esecuzioni
+    | Run history
     |--------------------------------------------------------------------------
     |
-    | Laravel cancella un job dalla coda appena finisce: senza storico non c'e'
-    | modo di sapere se il backup di stanotte e' girato. Attivandolo, ogni
-    | esecuzione lascia una riga in queue_monitor_runs, ripulita ogni giorno
-    | oltre keep_days: sette giorni bastano alle statistiche, che guardano l'ultima settimana.
+    | Laravel deletes a job from the queue as soon as it finishes: without a
+    | history there is no way to know whether last night's backup ran. When
+    | enabled, every run leaves a row in queue_monitor_runs, pruned daily
+    | after keep_days: seven days are enough for the stats, which cover the
+    | last week.
     |
     */
 
     'history' => [
         'enabled' => env('QUEUE_MONITOR_HISTORY', false),
         'keep_days' => (int) env('QUEUE_MONITOR_KEEP_DAYS', 7),
-        // I giorni dell'andamento nelle statistiche dello Storico. Lo storico
-        // non viene mai ripulito sotto questa soglia.
+        // Days in the History stats trend. The history is never pruned below
+        // this threshold.
         'stats_days' => (int) env('QUEUE_MONITOR_STATS_DAYS', 7),
         'table' => 'queue_monitor_runs',
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Chi ha avviato il job
+    | Who started the job
     |--------------------------------------------------------------------------
     |
-    | L'id dell'utente collegato entra nel payload al momento del dispatch,
-    | quando la sessione c'e' ancora: nel worker auth() e' vuota. I job accodati
-    | da un job in esecuzione ereditano l'operatore del padre.
+    | The logged-in user's id goes into the payload at dispatch time, while
+    | the session still exists: in the worker auth() is empty. Jobs queued by
+    | a running job inherit their parent's operator.
     |
     */
 

@@ -15,7 +15,7 @@ use MarcoDiPerna\FilamentQueueMonitor\Support\Columns;
 use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
- * I lavori lanciati a gruppi: quanto manca e quanti sono falliti.
+ * Jobs dispatched in batches: how much is left and how many failed.
  */
 class JobBatchResource extends Resource
 {

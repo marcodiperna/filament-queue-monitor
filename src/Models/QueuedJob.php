@@ -10,8 +10,8 @@ use Illuminate\Support\Carbon;
 use MarcoDiPerna\FilamentQueueMonitor\Support\Operator;
 
 /**
- * Un job in coda, dalla tabella del driver database. La scrive e la svuota il
- * worker: qui si legge soltanto.
+ * A queued job, from the database driver's table. The worker writes and
+ * empties it: here it is only read.
  */
 class QueuedJob extends Model
 {
@@ -60,8 +60,8 @@ class QueuedJob extends Model
     }
 
     /**
-     * Il nome che Laravel salva nel payload, di solito la classe completa. Come
-     * mostrarlo lo decide il plugin (formatJobName).
+     * The name Laravel stores in the payload, usually the fully qualified
+     * class. The plugin decides how to show it (formatJobName).
      */
     public static function displayName(?string $payload): string
     {
@@ -76,8 +76,8 @@ class QueuedJob extends Model
     }
 
     /**
-     * Le colonne di tempo della coda sono timestamp Unix: si leggono nel fuso
-     * dell'applicazione.
+     * The queue's time columns are Unix timestamps: they are read in the
+     * application's timezone.
      */
     public static function time(int|string $timestamp): Carbon
     {
