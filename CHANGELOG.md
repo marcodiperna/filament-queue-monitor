@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.2.0 — 2026-11-16
 
 - Plugin: `pages()` chooses which pages to show, for example without Batches for apps
   that don't use them.
