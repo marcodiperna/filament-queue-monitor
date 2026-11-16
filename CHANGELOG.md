@@ -35,8 +35,7 @@
 
 ## v1.0.0 — 2026-11-13
 
-First release, born in a business application where it replaced `moox/jobs` (which did
-not support Laravel 13).
+First release.
 
 - Three pages: **Queue** (waiting, running and scheduled jobs), **Failed jobs** (full
   error, retry one, selected or all, flush) and **Batches** (progress and failures).
