@@ -143,16 +143,6 @@ English and Italian included; `app.locale` decides. To change them:
 php artisan vendor:publish --tag=filament-queue-monitor-translations
 ```
 
-## Coming from moox/jobs
-
-1. `composer remove moox/jobs`
-2. remove the four `Jobs*Plugin` from the panel and add `QueueMonitorPlugin`
-3. delete `config/core.php` and `config/jobs.php` if published
-
-moox's tables (`job_manager`, `job_batch_manager`, `job_queue_workers`) are no longer needed:
-they stay in the database until a migration drops them. If you had added to moox the user who
-starts a job, it is built in here: `QUEUE_MONITOR_TRACK_OPERATOR=true`.
-
 ## Tests
 
 ```bash
